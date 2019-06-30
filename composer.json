@@ -1,34 +1,26 @@
 {
     "name": "qlimix/kernel",
     "type": "library",
-    "license": "LGPL-3.0-only",
+    "description": "Interfaces to start your application with",
+    "license": "MIT",
+    "keywords": [
+        "kernel"
+    ],
     "authors": [
         {
             "name": "Frank",
             "email": "frank@qlimix.net"
         }
     ],
+    "require": {
+        "php": ">=7.2"
+    },
     "autoload": {
         "psr-4": {
             "Qlimix\\Kernel\\": "src/"
         }
     },
-    "config": {
-        "sort-packages": true
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@bitbucket.org:qlimix/codesniffer-standard.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@bitbucket.org:qlimix/code-standard.git"
-        }
-    ],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require-dev": {
-        "qlimix/code-standard": "dev-master"
+        "qlimix/code-standard": "^1.0"
     }
 }
