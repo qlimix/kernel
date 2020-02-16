@@ -13,14 +13,22 @@
         }
     ],
     "require": {
-        "php": ">=7.2"
+        "php": "^7.4"
     },
     "autoload": {
         "psr-4": {
             "Qlimix\\Kernel\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Qlimix\\Tests\\Kernel\\": "src/"
+        }
+    },
     "require-dev": {
-        "qlimix/code-standard": "^1.0"
+        "qlimix/code-standard": "^2.0"
+    },
+    "config": {
+        "sort-packages": true
     }
 }
