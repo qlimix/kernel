@@ -1,25 +1,25 @@
 <?php declare(strict_types=1);
 
-namespace Qlimix\Tests\Kernel\Http;
+namespace Bootstrap;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Qlimix\Kernel\Bootstrap\BootstrapInterface;
+use Qlimix\Kernel\Bootstrap\Dependencies\LoaderInterface;
+use Qlimix\Kernel\Bootstrap\DependencyBootstrap;
 use Qlimix\Kernel\Bootstrap\Environment\Exception\LoaderException as EnvLoaderException;
 use Qlimix\Kernel\Bootstrap\Exception\BootstrapException;
-use Qlimix\Kernel\Bootstrap\KernelBootstrap;
 
-final class KernelBootStrapTest extends TestCase
+final class DependencyBootstrapTest extends TestCase
 {
-    private MockObject $bootstrapMock;
+    private MockObject $loader;
 
-    private KernelBootstrap $bootstrap;
+    private DependencyBootstrap $bootstrap;
 
     protected function setUp(): void
     {
-        $this->bootstrapMock = $this->createMock(BootstrapInterface::class);
+        $this->loader = $this->createMock(LoaderInterface::class);
 
-        $this->bootstrap = new KernelBootstrap([$this->bootstrapMock]);
+        $this->bootstrap = new DependencyBootstrap($this->loader);
     }
 
     /**
@@ -27,8 +27,8 @@ final class KernelBootStrapTest extends TestCase
      */
     public function shouldBootstrap(): void
     {
-        $this->bootstrapMock->expects($this->once())
-            ->method('bootstrap');
+        $this->loader->expects($this->once())
+            ->method('load');
 
         $this->bootstrap->bootstrap();
     }
@@ -38,8 +38,8 @@ final class KernelBootStrapTest extends TestCase
      */
     public function shouldFailOnBootstrapFailure(): void
     {
-        $this->bootstrapMock->expects($this->once())
-            ->method('bootstrap')
+        $this->loader->expects($this->once())
+            ->method('load')
             ->willThrowException(new EnvLoaderException());
 
         $this->expectException(BootstrapException::class);

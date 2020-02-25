@@ -7,14 +7,15 @@ use Throwable;
 
 final class KernelBootstrap implements BootstrapInterface
 {
-    private Environment\LoaderInterface $envLoader;
+    /** @var BootstrapInterface[] */
+    private array $bootstraps;
 
-    private Dependencies\LoaderInterface $depLoader;
-
-    public function __construct(Environment\LoaderInterface $envLoader, Dependencies\LoaderInterface $depLoader)
+    /**
+     * @param BootstrapInterface[] $bootstraps
+     */
+    public function __construct(array $bootstraps)
     {
-        $this->envLoader = $envLoader;
-        $this->depLoader = $depLoader;
+        $this->bootstraps = $bootstraps;
     }
 
     /**
@@ -23,8 +24,9 @@ final class KernelBootstrap implements BootstrapInterface
     public function bootstrap(): void
     {
         try {
-            $this->envLoader->load();
-            $this->depLoader->load();
+            foreach ($this->bootstraps as $bootstrap) {
+                $bootstrap->bootstrap();
+            }
         } catch (Throwable $exception) {
             throw new BootstrapException('Failed to bootstrap', 0, $exception);
         }
